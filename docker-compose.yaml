@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  web:
+    image: php:7.3-apache
+    build:
+      context: ./php
+      dockerfile: Dockerfile
+    container_name: php73
+    depends_on:
+      - db
+    volumes:
+      - ./html:/var/www/html
+    restart: always
+    ports:
+      - 8080:80
+
+  db:
+    container_name: mysql8
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=pini
+    ports:
+      - 6306:3306
